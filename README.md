@@ -37,4 +37,123 @@ This repository contains a simple backend service built for the Linq Backend Eng
    ```bash
    git clone https://github.com/saiprasadchary/linq-backend-assessment-deploy.git
    cd linq-backend-assessment-deploy
+
+2.	Install Dependencies:
+   npm install
+
+3.	Start the Server:
+   npm start
+
+The server will run on port 3000 by default. You can change this by setting the PORT environment variable.
+
+4.	Access the API Documentation:
+Open your browser and navigate to:    http://localhost:3000/docs
    
+   API Endpoints
+   
+   Authentication
+   	•	POST /login
+   Generates a JWT token using the provided username.
+   
+   Request Body:
+      
+      {
+        "username": "yourUserName"
+      }
+   Response:
+
+      {
+        "token": "yourGeneratedJWT"
+      }   
+
+•	GET /protected
+A protected route that requires a valid JWT token in the Authorization header.
+Headers:
+      Authorization: Bearer <your-token>
+
+
+Contacts
+	•	POST /contacts
+   Create a new contact.
+   Request Body:
+       {
+        "name": "John Doe",
+        "email": "john@example.com"
+        }
+
+	•	GET /contacts
+   Retrieve all contacts.
+   	•	GET /contacts/:id
+   Retrieve a contact by ID.
+   	•	PUT /contacts/:id
+   Update an existing contact.
+   Request Body:
+
+      {
+        "name": "Jane Doe"
+      }
+
+	•	DELETE /contacts/:id
+Delete a contact.
+
+Notes
+•	POST /contacts/:contactId/notes
+Create a note for a specific contact. Accepts either note_body or note_text and normalizes it to body.
+Request Body Example:
+
+      {
+        "note_body": "This is a note for the contact."
+      }
+
+	•	GET /contacts/:contactId/notes
+ 
+Retrieve all notes for a given contact.
+	•	GET /notes/:id
+Retrieve a specific note by ID.
+	•	PUT /notes/:id
+Update an existing note.
+Request Body Example:
+
+      {
+        "note_text": "Updated note content."
+      }
+
+•	DELETE /notes/:id   
+      Delete a note.
+
+Outbound Request Simulation
+•	GET /simulate-upstream
+Simulates an outbound request to an upstream dependency with retry and exponential backoff logic.
+   
+Response Example (on success):
+
+      {
+        "message": "Upstream request succeeded.",
+        "result": {
+          "data": "Upstream data received successfully."
+        }
+      }
+
+
+Usage
+
+      1.	Authentication:
+      Use the /login endpoint to generate a JWT token. Include this token in the Authorization header (formatted as Bearer <token>) when accessing protected routes like /protected.
+      
+      2.	Interacting with the API:
+      Use an API client like Postman or the interactive Swagger UI (accessible at /docs) to test the endpoints.
+      
+      3.	Note Normalization:
+      The service accepts either note_body or note_text and automatically normalizes them to the body field.
+
+Design Decisions, Tradeoffs, and Assumptions
+
+      •	Simplicity: An in-memory storage approach is used    for demonstration purposes. In a production environment, a proper database would be implemented.
+      
+      •	Security: JWT-based authentication is used; however, the secret key should be stored securely using environment variables in production.
+      
+      •	Resilience: The outbound request simulation includes a retry mechanism with exponential backoff to handle simulated external API failures.
+      
+      •	Maintainability: The project structure clearly separates controllers, routes, and middleware, making it easy to extend and maintain.
+      
+      •	Assumptions: The service targets internal usage, so some production-level features (like advanced logging and extensive validation) have been simplified.
