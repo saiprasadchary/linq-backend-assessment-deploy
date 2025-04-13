@@ -1,0 +1,16 @@
+{
+  "name": "linq-backend-assessment",
+  "version": "1.0.0",
+  "description": "Backend service for the Linq Backend Engineer Assessment.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
